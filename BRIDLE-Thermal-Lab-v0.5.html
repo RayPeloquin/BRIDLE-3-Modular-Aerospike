@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BRIDLE Thermal Screening Lab — v0.5</title>
+<style>
+:root{--ink:#182f3d;--muted:#546976;--paper:#f5f4ef;--card:#fff;--line:#d9dfdf;--copper:#aa572c;--blue:#306c8b;--green:#246c58;--red:#983845}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button,select,input[type=range],input[type=checkbox]{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #cf9d62;outline-offset:3px}header{border-bottom:1px solid var(--line);padding:25px max(24px,calc((100vw - 1240px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font-weight:800;letter-spacing:.09em;font-size:22px}.eyebrow{font:11px/1.5 ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}main{max-width:1288px;margin:auto;padding:35px 24px 50px}h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,48px);line-height:1.12;margin:10px 0 15px;max-width:860px;font-weight:500}h2{font-size:20px;line-height:1.3;margin:0 0 12px}h3{font-size:15px;margin:0 0 8px}p{margin:0 0 12px}.intro{max-width:800px;color:var(--muted)}.tag{border:1px solid var(--line);padding:7px 11px;border-radius:4px;font:11px ui-monospace,monospace;white-space:nowrap}.presets{display:flex;flex-wrap:wrap;gap:8px;margin:25px 0 18px}.presets button{border:1px solid #b9c6ca;background:#fff;border-radius:4px;padding:8px 12px;color:var(--ink);font-size:12px}.presets button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}.layout{display:grid;grid-template-columns:265px minmax(0,1fr);gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:22px}.controls label{display:block;font-size:12px;font-weight:650;margin:19px 0 6px}.controls label:first-of-type{margin-top:12px}.controls select{display:block;width:100%;border:1px solid #bac7ca;border-radius:4px;padding:9px;background:#fff;color:var(--ink);font-size:13px}.row{display:flex;justify-content:space-between;gap:10px;align-items:center}.readout{font:13px ui-monospace,monospace}.controls input[type=range]{width:100%;accent-color:var(--copper)}.controls .check{display:flex;gap:9px;align-items:flex-start;font-size:13px;font-weight:500}.controls input[type=checkbox]{margin:4px 0;accent-color:var(--ink)}.small{font-size:12px;color:var(--muted)}.rule{border-top:1px solid var(--line);padding-top:15px;margin-top:18px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}.metric{border-left:3px solid var(--line);padding-left:13px}.metric .value{font:28px/1.25 ui-monospace,monospace;margin:7px 0 2px}.status{display:inline-block;font-size:12px;border-radius:4px;padding:4px 8px;background:#eaf2ed;color:var(--green)}.status.fail{background:#f9e9eb;color:var(--red)}.chart-wrap{position:relative;margin:10px -8px 0}svg{display:block;width:100%;height:auto}.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;margin:6px 0 13px}.legend span:before{display:inline-block;content:"";width:23px;height:3px;vertical-align:middle;margin-right:6px;background:var(--copper)}.legend .other:before{background:var(--blue)}.legend .limit:before{background:var(--red)}#hover{position:absolute;display:none;pointer-events:none;background:#182f3d;color:#fff;padding:10px 12px;border-radius:5px;font:11px/1.7 ui-monospace,monospace;box-shadow:0 3px 15px #0002;z-index:2}.note{padding:13px 15px;background:#f4f6f6;border-left:3px solid #9aaeb6;font-size:13px;margin-top:15px}.note.warn{border-color:var(--red);background:#fcf0f0}.note strong{font-weight:650}.secondary{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.equation{font:15px/1.65 ui-monospace,monospace;overflow-wrap:anywhere;background:#f4f6f6;border-radius:4px;padding:14px;margin:12px 0}.facts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:17px 0}.fact{border-top:1px solid var(--line);padding-top:10px}.fact b{display:block;font:22px ui-monospace,monospace;margin:4px 0}table{width:100%;border-collapse:collapse;font-size:12px}td,th{text-align:left;padding:9px 5px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:600}td.num,th.num{text-align:right;font-family:ui-monospace,monospace}.download{border:1px solid #acbdc3;padding:8px 12px;background:#fff;border-radius:4px;color:var(--ink);font-size:12px}.below{margin-top:18px}details{border-top:1px solid var(--line);padding-top:13px;margin-top:15px}summary{cursor:pointer;font-size:13px;font-weight:650}details p{font-size:13px;margin-top:10px}ul{margin:9px 0;padding-left:21px}li{margin-bottom:7px}a{color:var(--blue)}footer{font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:19px;margin-top:25px}.footer-row{display:flex;justify-content:space-between;gap:20px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.controls{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}.controls h2,.controls .small,.controls .rule{grid-column:1/-1}.controls label{margin-top:12px}.controls .check{margin-top:22px}.secondary{grid-template-columns:1fr}}
+@media(max-width:560px){header{padding:18px;align-items:flex-start}.tag{white-space:normal;font-size:9px;max-width:150px}main{padding:25px 15px}.card{padding:17px}.metrics{gap:8px}.metric .value{font-size:22px}.metric .small{font-size:10px}.controls{grid-template-columns:1fr}.controls h2,.controls .small,.controls .rule{grid-column:auto}.facts{gap:10px}.footer-row{display:block}.presets button{font-size:11px;padding:7px 9px}}
+@media print{button,input,select,.presets{display:none!important}body{background:#fff}.layout{display:block}.controls{display:none}.card{break-inside:avoid}.secondary{display:block}.secondary .card{margin-top:15px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">BRIDLE</div><div class="eyebrow">Thermal screening lab · v0.5 · 14 Oct 2026</div></div><div class="tag">CONCEPT STUDY · NOT BUILT<br>PERFORMANCE UNMEASURED</div></header>
+<main>
+<div class="eyebrow">Six modules. Two distinct fault cases.</div>
+<h1>Local heat sharing helps.<br>A shared cooling loss changes the result.</h1>
+<p class="intro">Explore the normalized model behind BRIDLE-2 and the proposed BRIDLE-3 switches and cooldown reserve. Compare the affected module with its neighbors, then check what happens when every module loses cooling together.</p>
+<div class="presets" aria-label="Model presets">
+<button data-preset="separated">Separated local</button><button data-preset="joined">Joined local</button><button data-preset="switched">Switched local</button><button data-preset="reserve">Local + reserve</button><button data-preset="shared">Shared loss + reserve</button><button data-preset="window">12-unit window trap</button><button data-preset="larger">Shared loss, b = 0.85</button>
+</div>
+<div class="layout">
+<section class="card controls" aria-label="Simulation controls">
+<h2>Set the case</h2>
+<div><label for="scenario">Fault and shutdown</label><select id="scenario"><option value="local">One shuts down; five stay healthy</option><option value="shared">All six shut down identically</option></select></div>
+<div><div class="row"><label for="main">Retained main conductance a</label><output id="main-value" class="readout">0.20</output></div><input id="main" type="range" min="0" max="1" step=".01" value=".20"></div>
+<div><div class="row"><label for="reserve">Initial reserve coefficient b</label><output id="reserve-value" class="readout">0.500</output></div><input id="reserve" type="range" min="0" max="1.2" step=".001" value=".500"></div>
+<div><label class="check" for="switch"><input id="switch" type="checkbox" checked><span>Enable ideal reciprocal interface switches</span></label></div>
+<div><label for="coupling">Fixed / low-state coupling</label><select id="coupling"><option value="0.02">0.02 · separated</option><option value="0.4">0.40 · joined</option></select></div>
+<div><label for="horizon">Calculation window</label><select id="horizon"><option value="12">12 normalized time units</option><option value="30">30 normalized time units</option><option value="60">60 normalized time units</option></select></div>
+<p class="small rule">Every node starts at θ = 1. Affected nodes receive the assumed heat input exp(−τ/3). Healthy neighbors retain q = a = 1. The illustrative limit is 1.50.</p>
+<p class="small">Reserve cooling is b·exp(−τ/2.5). This prescribed curve is a screening input, not a bottle or blowdown model.</p>
+</section>
+<section class="card" aria-label="Computed temperature trajectories">
+<div class="metrics" aria-live="polite">
+<div class="metric"><div class="small">MODULE 0 PEAK</div><div class="value" id="peak-main">—</div><span class="status" id="status">Computing</span></div>
+<div class="metric"><div class="small">HIGHEST OTHER PEAK</div><div class="value" id="peak-other">—</div><div class="small">Same calculation window</div></div>
+<div class="metric"><div class="small">RESERVE BUDGET I∞</div><div class="value" id="budget">—</div><div class="small">Conductance × normalized time</div></div>
+</div>
+<div class="chart-wrap" id="chart-wrap"><svg id="chart" viewBox="0 0 900 400" role="img" aria-label="Computed normalized temperature against normalized time"></svg><div id="hover"></div></div>
+<div class="legend"><span>Module 0</span><span class="other">Highest other module</span><span class="limit">Limit 1.50</span></div>
+<p class="small" id="case-caption"></p>
+<div id="interpretation" class="note"></div>
+<div class="row rule"><span class="small" id="events"></span><button class="download" id="export">Download current trajectory CSV</button></div>
+</section>
+</div>
+<div class="secondary">
+<section class="card">
+<div class="eyebrow">A check beyond the plotted window</div><h2>Shared loss has an exact long-time limit</h2>
+<p class="small">With identical modules, identical reserves and zero main cooling, temperatures stay equal. Heat sharing cancels, regardless of switch state.</p>
+<div class="equation">dθ/dτ = exp(−τ/3) − b·exp(−τ/2.5)·θ</div>
+<div class="facts"><div class="fact"><span class="small">PROPOSED b = 0.500</span><b>2.102</b><span class="small">Eventual θ · exceeds 1.50</span></div><div class="fact"><span class="small">ALL-TIME THRESHOLD</span><b>b ≈ 0.844140</b><span class="small">For this reserve shape and limit</span></div></div>
+<p class="small">Sizing only to τ = 12 gives b ≈ 0.822024, but its eventual temperature is 1.529. A finite window needs a justified terminal heat-tail condition.</p>
+<div class="note" id="all-time">Select a symmetric shared-loss case with zero main cooling for a live long-time check.</div>
+</section>
+<section class="card">
+<div class="eyebrow">Finite reserve · mathematical budget</div><h2>Separate a cooling budget from coolant mass</h2>
+<p class="small">For zero main cooling, I = ∫a(τ)dτ. Holding θ ≤ 1.50 for all future time requires I ≥ 5/3 in this fixed normalized model. The proposed exponential reserve has I = 1.25.</p>
+<table><thead><tr><th>Reserve schedule</th><th class="num">Duration</th><th class="num">Budget I</th></tr></thead><tbody><tr><td>Ideal wait, then hold at limit</td><td class="num">Infinite tail</td><td class="num">1.6667</td></tr><tr><td>Constant a = 0.5, then off</td><td class="num">4.4539</td><td class="num">2.2269</td></tr><tr><td>Constant a = 0.8, then off</td><td class="num">3.5676</td><td class="num">2.8540</td></tr><tr><td>Constant a = 1.0, then off</td><td class="num">3.2576</td><td class="num">3.2576</td></tr></tbody></table>
+<p class="small below">The constant schedules leave enough temperature headroom to absorb the entire remaining heat tail after reserve cutoff. These are ideal schedules with zero uncertainty margin, not hardware specifications.</p>
+<p class="small">Converting I into kilograms or liters requires a calibrated relation between coolant flow, enthalpy rise and effective conductance.</p>
+</section>
+</div>
+<section class="card below">
+<h2>What this calculation establishes</h2>
+<p>The switch trades additional neighbor heating for a lower local peak in the specified single-module fault. The stated reserve suppresses that switch in the same case. Neither result establishes containment, an equal-mass improvement, or survival of the shared-loss case.</p>
+<details><summary>Equations, switch policy and numerical method</summary>
+<div class="equation">dθᵢ/dτ = qᵢ − aᵢθᵢ + Σⱼ kᵢⱼ(θⱼ − θᵢ), with kᵢⱼ = kⱼᵢ ≥ 0.</div>
+<p>Each ring edge has one reciprocal conductance. With switching enabled, its hotter endpoint closes the contact at θ = 1.35 and opens it at 1.30. High conductance is 0.40. Switch delay, mechanical work, wear and contact dynamics are omitted.</p>
+<p>For the dimensional reference: θ = (T − T<sub>c</sub>)/ΔT<sub>ref</sub>; τ = tH<sub>0</sub>/C; a = H/H<sub>0</sub>; k = K/H<sub>0</sub>; q = Q/(H<sub>0</sub>ΔT<sub>ref</sub>). Equal capacities and a fixed common coolant reference are assumed.</p>
+<p>This offline explorer uses fourth-order Runge–Kutta with a 0.01 normalized step and threshold-event splitting. The accompanying Python reference uses adaptive integration and independent analytic checks. Peaks are numerical estimates; all-time statements here apply only to the explicitly stated scalar model.</p>
+</details>
+<details><summary>Requirements that still need physical evidence</summary>
+<ul class="small"><li>Measure heat capacities, local cooling behavior and seam/frame conductances. One steady-state temperature ratio cannot identify an arbitrary nonuniform network.</li><li>Define independent supply paths and shared failure modes. A/B labels and nominal 50/50 flow do not establish surviving local conductance.</li><li>Model finite coolant inventory, pressure, temperature, valve delivery, fluid storage and depletion.</li><li>Test switch delay, stuck-open/stuck-closed faults, thermal growth, seal leakage and shared frame paths.</li><li>Establish heat input from the coupled plume and wall model; preserve solid conduction as well.</li><li>Compare mass, stored energy, coolant inventory and pumping resources consistently before claiming an enlarged operating envelope.</li></ul>
+</details>
+<details><summary>Mechanism precedents</summary><p class="small">Mechanism precedents support research directions; they do not validate this engine. <a href="https://ntrs.nasa.gov/citations/20180003643" target="_blank" rel="noopener noreferrer">NASA: SMA thermal contacts</a> · <a href="https://ntrs.nasa.gov/citations/20020014292" target="_blank" rel="noopener noreferrer">NASA: heat-pipe capillary limits</a> · <a href="https://ntrs.nasa.gov/citations/20250009398" target="_blank" rel="noopener noreferrer">NASA: printed microchannel geometry and texture</a> · <a href="https://ntrs.nasa.gov/citations/19960029261" target="_blank" rel="noopener noreferrer">NASA: coupled modular-aerospike CFD</a>.</p></details>
+</section>
+<footer><div class="footer-row"><span>Ray Peloquin · UI — Unique Intelligence · BRIDLE thermal review v0.5</span><span>Independent concept study · No NASA authorship or endorsement</span></div><p class="below">No measured temperatures, engine performance, alloy selection, vessel size, operating pressure, switch temperature or fabrication dimensions are established by this model.</p></footer>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+function rhs(t,y,p,z){
+  const out=new Array(6),flux=new Array(6);
+  for(let i=0;i<6;i++){const affected=p.shared||i===0,q=affected?Math.exp(-t/3):1,a=affected?p.main+p.reserve*Math.exp(-t/2.5):1;out[i]=q-a*y[i];const k=(p.sw&&z[i])?0.4:p.low;flux[i]=k*(y[(i+1)%6]-y[i]);}
+  for(let i=0;i<6;i++)out[i]+=flux[i]-flux[(i+5)%6];
+  return out;
+}
+function rk4(t,y,h,p,z){
+  const k1=rhs(t,y,p,z),k2=rhs(t+h/2,y.map((v,i)=>v+h*k1[i]/2),p,z),k3=rhs(t+h/2,y.map((v,i)=>v+h*k2[i]/2),p,z),k4=rhs(t+h,y.map((v,i)=>v+h*k3[i]),p,z);
+  return y.map((v,i)=>v+h*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6);
+}
+function advance(t,y,h,p,z){
+  let remaining=h,changes=0;
+  for(let guard=0;remaining>1e-11&&guard<30;guard++){
+    const end=rk4(t,y,remaining,p,z);let first=Infinity;
+    if(p.sw)for(let i=0;i<6;i++){
+      const threshold=z[i]?1.30:1.35,e0=Math.max(y[i],y[(i+1)%6])-threshold,e1=Math.max(end[i],end[(i+1)%6])-threshold;
+      if((!z[i]&&e0<0&&e1>=0)||(z[i]&&e0>0&&e1<=0)){
+        let lo=0,hi=remaining;
+        for(let n=0;n<28;n++){const mid=(lo+hi)/2,v=rk4(t,y,mid,p,z),f=Math.max(v[i],v[(i+1)%6])-threshold;if(z[i]?f>0:f<0)lo=mid;else hi=mid;}
+        first=Math.min(first,(lo+hi)/2);
+      }
+    }
+    if(!Number.isFinite(first)){return {y:end,z:z,changes:changes};}
+    y=rk4(t,y,first,p,z);t+=first;remaining-=first;
+    for(let i=0;i<6;i++){const threshold=z[i]?1.30:1.35;if(Math.abs(Math.max(y[i],y[(i+1)%6])-threshold)<1e-7){z[i]=!z[i];changes++;}}
+  }
+  if(remaining>1e-10)throw new Error("Unresolved threshold events");
+  return {y:y,z:z,changes:changes};
+}
+function simulate(p){
+  let y=[1,1,1,1,1,1],z=[false,false,false,false,false,false],t=0,changes=0;
+  const rows=[[0].concat(y)],n=Math.round(p.horizon/.01),h=p.horizon/n;let peak=1,other=1;
+  for(let j=0;j<n;j++){const v=advance(t,y,h,p,z);y=v.y;z=v.z;changes+=v.changes;t=(j+1)*h;rows.push([t].concat(y));peak=Math.max(peak,y[0]);other=Math.max(other,...y.slice(1));}
+  return {rows:rows,peak:peak,other:other,changes:changes};
+}
+function eventual(b){
+  const beta=2.5*b,n=4000,h=100/n;
+  function f(t){return Math.exp(-t/3-beta*Math.exp(-t/2.5));}
+  let sum=f(0)+f(100);for(let i=1;i<n;i++)sum+=(i%2?4:2)*f(i*h);
+  return Math.exp(-beta)+sum*h/3;
+}
+const presets={
+  separated:{shared:false,main:.2,reserve:0,sw:false,low:.02,horizon:12},
+  joined:{shared:false,main:.2,reserve:0,sw:false,low:.4,horizon:12},
+  switched:{shared:false,main:.2,reserve:0,sw:true,low:.02,horizon:12},
+  reserve:{shared:false,main:.2,reserve:.5,sw:true,low:.02,horizon:12},
+  shared:{shared:true,main:0,reserve:.5,sw:true,low:.02,horizon:30},
+  window:{shared:true,main:0,reserve:.823,sw:true,low:.02,horizon:12},
+  larger:{shared:true,main:0,reserve:.85,sw:true,low:.02,horizon:30}
+};
+let current=null,params=null;
+const f3=x=>x.toFixed(3);
+function read(){return {shared:$("scenario").value==="shared",main:+$("main").value,reserve:+$("reserve").value,sw:$("switch").checked,low:+$("coupling").value,horizon:+$("horizon").value};}
+function selectPreset(name){const p=presets[name];$("scenario").value=p.shared?"shared":"local";$("main").value=p.main;$("reserve").value=p.reserve;$("switch").checked=p.sw;$("coupling").value=p.low;$("horizon").value=p.horizon;document.querySelectorAll("[data-preset]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.preset===name)));render();}
+function draw(data,p){
+  const W=900,H=400,L=58,R=22,T=20,B=52,x=t=>L+t/p.horizon*(W-L-R);
+  const ymin=Math.max(0,Math.floor(Math.min(...data.rows.map(r=>r[1]),.9)*5)/5-.05),ymax=Math.max(1.65,Math.ceil(Math.max(data.peak,data.other)*5)/5+.05),y=v=>H-B-(v-ymin)/(ymax-ymin)*(H-T-B);
+  let svg='<title>Normalized temperatures for the selected fault and cooling assumptions</title>';
+  for(let j=0;j<=5;j++){const v=ymin+(ymax-ymin)*j/5,yy=y(v);svg+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yy+'" y2="'+yy+'" stroke="#e3e8e8"/><text x="'+(L-9)+'" y="'+(yy+4)+'" text-anchor="end" fill="#637985" font-size="11">'+v.toFixed(2)+'</text>';}
+  for(let j=0;j<=6;j++){const t=p.horizon*j/6,xx=x(t);svg+='<text x="'+xx+'" y="'+(H-B+24)+'" text-anchor="middle" fill="#637985" font-size="11">'+t.toFixed(0)+'</text>';}
+  svg+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(1.5)+'" y2="'+y(1.5)+'" stroke="#983845" stroke-dasharray="5 5" stroke-width="1.5"/>';
+  const stride=Math.max(1,Math.floor(data.rows.length/1300));
+  for(let series=0;series<2;series++){let d="";for(let i=0;i<data.rows.length;i+=stride){const r=data.rows[i],v=series?Math.max(...r.slice(2)):r[1];d+=(d?"L":"M")+x(r[0]).toFixed(2)+","+y(v).toFixed(2);}const last=data.rows[data.rows.length-1];d+="L"+x(last[0]).toFixed(2)+","+y(series?Math.max(...last.slice(2)):last[1]).toFixed(2);svg+='<path d="'+d+'" fill="none" stroke="'+(series?"#306c8b":"#aa572c")+'" stroke-width="2.7" stroke-linejoin="round"/>';}
+  svg+='<text x="'+((L+W-R)/2)+'" y="'+(H-10)+'" text-anchor="middle" fill="#546976" font-size="12">Normalized time τ</text><text x="15" y="185" text-anchor="middle" transform="rotate(-90 15 185)" fill="#546976" font-size="12">Normalized excess temperature θ</text>';
+  $("chart").innerHTML=svg;
+  $("chart").onpointermove=e=>{const box=$("chart").getBoundingClientRect(),vx=(e.clientX-box.left)/box.width*W,tt=Math.max(0,Math.min(p.horizon,(vx-L)/(W-L-R)*p.horizon)),idx=Math.round(tt/p.horizon*(data.rows.length-1)),r=data.rows[idx],tip=$("hover");tip.innerHTML="τ "+f3(r[0])+"<br>Module 0: "+f3(r[1])+"<br>Highest other: "+f3(Math.max(...r.slice(2)));tip.style.display="block";tip.style.left=Math.max(0,Math.min(box.width-190,e.clientX-box.left+12))+"px";tip.style.top="25px";};
+  $("chart").onpointerleave=()=>{$("hover").style.display="none";};
+}
+function render(){
+  params=read();current=simulate(params);const p=params,d=current,within=Math.max(d.peak,d.other)<=1.500001;
+  $("main-value").textContent=p.main.toFixed(2);$("reserve-value").textContent=p.reserve.toFixed(3);$("peak-main").textContent=f3(d.peak);$("peak-other").textContent=f3(d.other);$("budget").textContent=f3(2.5*p.reserve);
+  $("status").textContent=within?"Within window limit":"Window limit exceeded";$("status").className="status"+(within?"":" fail");
+  $("case-caption").textContent=p.shared?"All six shut down with the same heat history and cooling. Their trajectories coincide; coupling cannot provide a colder neighbor.":"Only module 0 shuts down. The other five keep firing with full nominal cooling; this is not a shared supply failure.";
+  const intro=$("interpretation");intro.className="note";
+  if(p.shared&&p.main===0){const lim=eventual(p.reserve);intro.innerHTML="<strong>Shared zero-main loss:</strong> the predicted eventual temperature is "+f3(lim)+". "+(lim>1.500001?"A favorable finite-window result would not establish all-time compliance.":"This reserve shape meets the all-time scalar limit under the ideal model, with no hardware validation.");if(lim>1.500001)intro.classList.add("warn");}
+  else if(!p.shared&&p.sw&&d.changes===0&&p.reserve>0)intro.innerHTML="<strong>The switch never activates.</strong> The modeled reserve supplies the improvement in this case. Neighbor cooling remains healthy.";
+  else intro.innerHTML="<strong>Scope:</strong> this result applies to the selected initial state and assumed fault. Temperatures alone do not establish containment, coolant delivery, structural survival or engine performance.";
+  $("events").textContent=d.changes+" interface state changes · no switch delay";
+  const end=$("all-time");if(p.shared&&p.main===0){const lim=eventual(p.reserve);end.innerHTML="<strong>Current symmetric case:</strong> eventual θ = "+f3(lim)+"; "+(lim>1.500001?"exceeds":"satisfies")+" the 1.50 scalar limit. Current I∞ = "+f3(2.5*p.reserve)+".";end.className="note"+(lim>1.500001?" warn":"");}else{end.textContent="Select a symmetric shared-loss case with zero main cooling for a live long-time check.";end.className="note";}
+  draw(d,p);
+}
+document.querySelectorAll("[data-preset]").forEach(b=>b.addEventListener("click",()=>selectPreset(b.dataset.preset)));
+["scenario","main","reserve","switch","coupling","horizon"].forEach(id=>$(id).addEventListener(id==="main"||id==="reserve"?"input":"change",()=>{document.querySelectorAll("[data-preset]").forEach(b=>b.setAttribute("aria-pressed","false"));render();}));
+$("export").addEventListener("click",()=>{let csv="# BRIDLE v0.5 dimensionless screening\n# "+JSON.stringify(params)+"\ntau,theta_0,theta_1,theta_2,theta_3,theta_4,theta_5\n"+current.rows.map(r=>r.join(",")).join("\n");const url=URL.createObjectURL(new Blob([csv],{type:"text/csv"})),a=document.createElement("a");a.href=url;a.download="BRIDLE-screening-trajectory-v0.5.csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+window.bridleModel={simulate:simulate,eventual:eventual,presets:presets,getCurrent:()=>({params:params,result:current})};
+selectPreset("reserve");
+</script>
+</body>
+</html>

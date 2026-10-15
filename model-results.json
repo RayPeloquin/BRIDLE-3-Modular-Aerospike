@@ -1,0 +1,220 @@
+{
+  "version": "0.5",
+  "status": "dimensionless, uncalibrated screening",
+  "local_cases": [
+    {
+      "label": "Separated",
+      "mode": "low",
+      "main": 0.2,
+      "reserve": 0.0,
+      "shared": false,
+      "horizon": 12.0,
+      "affected_peak": 1.8516452610613474,
+      "other_peak": 1.0151095535297832,
+      "switch_event_times": []
+    },
+    {
+      "label": "Joined",
+      "mode": "high",
+      "main": 0.2,
+      "reserve": 0.0,
+      "shared": false,
+      "horizon": 12.0,
+      "affected_peak": 1.453305156668453,
+      "other_peak": 1.0973416244631684,
+      "switch_event_times": []
+    },
+    {
+      "label": "Switched interfaces",
+      "mode": "switch",
+      "main": 0.2,
+      "reserve": 0.0,
+      "shared": false,
+      "horizon": 12.0,
+      "affected_peak": 1.474465136832766,
+      "other_peak": 1.1192211471102513,
+      "switch_event_times": [
+        0.5195159781638761,
+        3.6140882323024273
+      ]
+    },
+    {
+      "label": "Reserve only",
+      "mode": "low",
+      "main": 0.2,
+      "reserve": 0.5,
+      "shared": false,
+      "horizon": 12.0,
+      "affected_peak": 1.2053164572775934,
+      "other_peak": 1.0034296588574245,
+      "switch_event_times": []
+    },
+    {
+      "label": "Switches and reserve",
+      "mode": "switch",
+      "main": 0.2,
+      "reserve": 0.5,
+      "shared": false,
+      "horizon": 12.0,
+      "affected_peak": 1.2053164572775934,
+      "other_peak": 1.0034296588574245,
+      "switch_event_times": []
+    },
+    {
+      "label": "Local zero main, reserve only",
+      "mode": "low",
+      "main": 0.0,
+      "reserve": 0.5,
+      "shared": false,
+      "horizon": 12.0,
+      "affected_peak": 1.8306109158166413,
+      "other_peak": 1.0158884897851246,
+      "switch_event_times": []
+    },
+    {
+      "label": "Local zero main, switches and reserve",
+      "mode": "switch",
+      "main": 0.0,
+      "reserve": 0.5,
+      "shared": false,
+      "horizon": 12.0,
+      "affected_peak": 1.3499927029421948,
+      "other_peak": 1.0911045265933463,
+      "switch_event_times": [
+        0.984430315981943,
+        3.9908401556566795,
+        4.434820965888921,
+        4.956571328016714,
+        5.568918239567636,
+        5.9393207725581325,
+        6.826556804529947,
+        7.121629631662477,
+        8.682584056220115,
+        8.927997529763122
+      ]
+    },
+    {
+      "label": "Shared zero main and identical reserves",
+      "mode": "switch",
+      "main": 0.0,
+      "reserve": 0.5,
+      "shared": true,
+      "horizon": 12.0,
+      "affected_peak": 2.068875295380949,
+      "other_peak": 2.068875295380949,
+      "switch_event_times": [
+        0.958969125722053
+      ]
+    }
+  ],
+  "coupling_sensitivity": [
+    {
+      "k": 0.02,
+      "required": 0.34282422284476793,
+      "other_peak": 1.0082741545288945
+    },
+    {
+      "k": 0.05,
+      "required": 0.3268413384097516,
+      "other_peak": 1.019785514268361
+    },
+    {
+      "k": 0.1,
+      "required": 0.30095737751940754,
+      "other_peak": 1.0369596476213938
+    },
+    {
+      "k": 0.2,
+      "required": 0.2517344431703598,
+      "other_peak": 1.0656061364037046
+    },
+    {
+      "k": 0.4,
+      "required": 0.16184713706530793,
+      "other_peak": 1.108329327045983
+    },
+    {
+      "k": 0.8,
+      "required": 0.007988464947987604,
+      "other_peak": 1.1642942958603177
+    }
+  ],
+  "constant_shared_required": 0.353680812461611,
+  "exponential_reserve": {
+    "current_b": 0.5,
+    "current_budget": 1.25,
+    "current_theta12": 2.0688752953809644,
+    "current_theta_infinity": 2.1023923293173987,
+    "required_b_all_time": 0.844139974594943,
+    "required_budget_all_time": 2.1103499364873577,
+    "required_b_only_twelve": 0.8220240784414868,
+    "eventual_theta_if_only_twelve": 1.5293711957989289
+  },
+  "ideal_budget": {
+    "lower_bound": 1.6666666666666667,
+    "start": 0.5469646703818638,
+    "peak_rate": 0.5555555555555556
+  },
+  "constant_reserve_schedules": [
+    {
+      "rate": 0.5,
+      "duration": 4.453861470322603,
+      "budget": 2.2269307351613015,
+      "temperature_at_off": 0.8202350493936058
+    },
+    {
+      "rate": 0.8,
+      "duration": 3.567557444563681,
+      "budget": 2.8540459556509448,
+      "temperature_at_off": 0.5865928279141454
+    },
+    {
+      "rate": 1.0,
+      "duration": 3.257600964832133,
+      "budget": 3.257600964832133,
+      "temperature_at_off": 0.48717313210248675
+    }
+  ],
+  "calibration": [
+    {
+      "k": 0.02,
+      "neighbor": 0.0192378891009028,
+      "next_nearest": 0.0003702332469455756
+    },
+    {
+      "k": 0.05,
+      "neighbor": 0.04554904554904555,
+      "next_nearest": 0.002079002079002079
+    },
+    {
+      "k": 0.1,
+      "neighbor": 0.08392434988179669,
+      "next_nearest": 0.007092198581560285
+    },
+    {
+      "k": 0.2,
+      "neighbor": 0.14596273291925466,
+      "next_nearest": 0.021739130434782615
+    },
+    {
+      "k": 0.4,
+      "neighbor": 0.23510466988727863,
+      "next_nearest": 0.057971014492753645
+    },
+    {
+      "k": 0.8,
+      "neighbor": 0.34837889383343923,
+      "next_nearest": 0.13223140495867766
+    }
+  ],
+  "checks": [
+    "Reciprocal edge fluxes conserve internal heat",
+    "Shared switched ring matches incomplete-gamma scalar solution",
+    "Constant-cooling shared ring matches its elementary solution",
+    "Analytic constant-cooling peak times match independent maximization",
+    "Constant ring matches an augmented matrix exponential",
+    "Switched peaks reproduce after a fourfold step reduction",
+    "Finite-duration schedules satisfy the exact post-cutoff tail bound",
+    "All-time reserve threshold agrees with independent quadrature"
+  ]
+}
