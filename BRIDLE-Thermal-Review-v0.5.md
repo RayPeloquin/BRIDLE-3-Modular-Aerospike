@@ -397,12 +397,16 @@ These sources support mechanism classes and modeling needs, not this design:
 
 ## 12. Reproduction and verification
 
-Run from this package:
+Run from the repository root with Python 3.11 or newer:
 
+    python -m pip install -r requirements.txt
     python thermal_model.py
-    python build_review.py
+    node qa_js_model.cjs
 
-The JSON results, reserve-trajectory CSV and standalone PNG accompany the code.
+The model writes JSON results, a reserve-trajectory CSV and a standalone PNG to
+`results/`. The JavaScript checks require a modern Node.js and the generated
+Python results. `build_review.py` is not a repository-root dependency; the
+[study ZIP](BRIDLE-Thermal-Study-v0.5.zip) is the separate report-generation package.
 The offline HTML computes its displayed trajectories and exports a selected CSV.
 It requires no remote scripts or network access.
 
@@ -421,8 +425,9 @@ The actual HTML JavaScript has also been checked against all eight adaptive
 Python cases, including the ideal switched trajectories, within 0.0005 in peak
 temperature. Preset, range, switch, CSV-export and late-failure-warning behavior
 passed a minimal DOM harness. Full browser layout, pointer interaction and
-rendering could not be checked in this environment. The optional browser QA
-script is included for an environment with Playwright and Chromium available.
+rendering could not be checked in this environment. The repository-root `qa_js_model.cjs` is the minimal DOM harness, not a
+real-browser test. Optional browser tooling is described as part of the separate
+study ZIP; it is not present in the repository root.
 
 The original unattached scratchpad/ring2.py, ring3.py and ring4.py reruns were
 not used as evidence. This package supplies the actual checked reference code.
