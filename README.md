@@ -9,9 +9,15 @@ candidate temperature-actuated thermal contacts and local reserve cooling.
 This repository pairs the concept illustration with a reproducible,
 dimensionless thermal screening study.
 
-![BRIDLE-3 concept and checked thermal screening numbers](BRIDLE-3-v0.5-Concept-and-Numbers.png)
+![Six modules ring a central spike on a shared frame. Tables beside the assembly compare cooling loss in one module with cooling loss in all six.](BRIDLE-3-v0.5-Concept-and-Numbers.png)
 
-## The question
+In the model, the proposed reserve keeps one affected module below the 1.50 limit.
+Giving each module that same reserve still lets all six exceed the limit when
+they lose main cooling together. The tables below give the dimensionless values.
+
+<a name="the-question"></a>
+
+## Where does heat go after shutdown?
 
 When a module shuts down and loses cooling, where does the remaining heat go?
 Reducing heat sharing protects neighboring modules but raises the affected
@@ -19,7 +25,9 @@ module's temperature. A reserve that helps one module can still fail when all
 six lose main cooling together. The calculation must follow the residual heat
 after shutdown, including the tail beyond a chosen simulation window.
 
-## Relevant numbers
+<a name="relevant-numbers"></a>
+
+## Modeled temperatures and cooling reserves
 
 Every number below is a result of an **uncalibrated, dimensionless model**.
 Temperature is normalized above a fixed coolant reference; these values are
@@ -30,7 +38,8 @@ neither degrees nor measured engine temperatures. The illustrative limit is
 
 All modules start at 1. The affected module retains main cooling conductance
 `a0 = 0.20`, with residual heat `q0 = exp(-tau/3)`. The five healthy modules retain
-`q = a = 1`. Peaks cover `0 <= tau <= 12`.
+`q = a = 1`. The table compares the affected module’s peak temperature with the
+highest peak among the other five over normalized time 0 to 12.
 
 | Configuration | Affected-module peak | Highest other-module peak |
 |---|---:|---:|
@@ -57,12 +66,15 @@ fractions or hardware requirements.
 ### Shared loss of all main cooling
 
 All six modules shut down identically and receive identical reserves. Their
-temperatures stay equal, so internal coupling cancels exactly:
+temperatures stay equal, so no heat flows between them. In the equation below,
+residual heat warms each module while reserve cooling carries heat away.
 
 $$
 \frac{d\theta}{d\tau}=e^{-\tau/3}-b e^{-\tau/2.5}\theta,
 \qquad \theta(0)=1.
 $$
+
+The table compares the long-run temperature for three starting levels of reserve cooling.
 
 | Exponential reserve | Coefficient `b` | Eventual temperature | All-time limit 1.50 |
 |---|---:|---:|---|
@@ -70,12 +82,15 @@ $$
 | Sized only to `tau = 12` | 0.822024 | 1.529371 | Exceeded later |
 | All-time model threshold | 0.844140 | 1.500000 | Boundary; zero model margin |
 
-The finite-window case reaches 1.50 at time 12 but exceeds it later.
 **`b` is a dimensionless conductance coefficient, not an accumulator volume.**
 
-![Shared cooling loss and the finite-window trap](BRIDLE-Reserve-Comparison.png)
+![Normalized temperature versus time after all six modules lose main cooling. The dashed curve reaches the 1.50 limit at time 12 and keeps rising.](BRIDLE-Reserve-Comparison.png)
 
-The integrated conductance-time budget is
+The original reserve approaches 2.102 and the reserve sized for time 12 approaches
+1.529. Only the all-time threshold approaches 1.500 from below, with zero model margin.
+
+Integrating the reserve’s cooling conductance over time gives a dimensionless
+budget equal to 2.5 times its starting coefficient, `b`.
 
 $$
 I_\infty=\int_0^\infty a_{\rm reserve}(\tau)\,d\tau=2.5b.
@@ -89,11 +104,11 @@ or volumes. The reviewed note states their assumptions and derivations.
 
 ## Explore and reproduce
 
-- [Reviewed mathematics, definitions and requirements](BRIDLE-Thermal-Review-v0.5.md)
-- [Python reference model](thermal_model.py)
-- [Machine-readable checked results](model-results.json)
-- [Offline interactive explorer](BRIDLE-Thermal-Lab-v0.5.html) — download the raw HTML and open it locally; GitHub displays source rather than running it.
-- [Complete study ZIP](BRIDLE-Thermal-Study-v0.5.zip), including report generator, data, figures and optional browser checks.
+- [Thermal model assumptions, equations and requirements (Markdown)](BRIDLE-Thermal-Review-v0.5.md)
+- [Reference thermal model and checks (Python script)](thermal_model.py)
+- [Thermal model check results (JSON)](model-results.json)
+- [Offline thermal model explorer (HTML)](BRIDLE-Thermal-Lab-v0.5.html) — download the raw HTML and open it locally; GitHub displays source rather than running it.
+- [Complete thermal study (ZIP)](BRIDLE-Thermal-Study-v0.5.zip), including report generator, data, figures and optional browser checks.
 
 With Python 3.11 or newer:
 
