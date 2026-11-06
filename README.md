@@ -6,42 +6,55 @@ Ray Peloquin + **UI — Unique Intelligence**
 
 BRIDLE-3 explores six replaceable hot modules on a shared cooled frame, with
 candidate temperature-actuated thermal contacts and local reserve cooling.
-This repository pairs the concept illustration with a reproducible,
-dimensionless thermal screening study.
+The figures and tables show how the model responds to assumed heat loads and
+cooling faults. The simulation has yet to be calibrated against engine tests.
 
-![Six modules ring a central spike on a shared frame. Tables beside the assembly compare cooling loss in one module with cooling loss in all six.](BRIDLE-3-v0.5-Concept-and-Numbers.png)
+## How to read the numbers
 
-In the model, the proposed reserve keeps one affected module below the 1.50 limit.
-Giving each module that same reserve still lets all six exceed the limit when
-they lose main cooling together. The tables below give the dimensionless values.
+The temperature values are dimensionless ratios. Divide the temperature
+difference between a module and its coolant by that difference at startup.
+On this scale, **1.00** is the starting value, and **1.50** is the comparison
+limit chosen for this study.
+
+In the “Local reserve only” row, the calculated peak of **1.205** means the
+temperature difference grew by **about 20.5%**. Converting that peak to a
+module temperature in degrees would require the coolant temperature and
+starting temperature difference for the hardware.
+[Normalization equations](BRIDLE-Thermal-Review-v0.5.md#2-dimensional-balance-and-normalization)
+
+![Concept drawing of six modules around a central spike on a shared frame. The tables compare simulated cooling loss in one module and in all six.](BRIDLE-3-v0.5-Concept-and-Numbers.png)
 
 <a name="the-question"></a>
 
 ## Where does heat go after shutdown?
 
-When a module shuts down and loses cooling, where does the remaining heat go?
-Reducing heat sharing protects neighboring modules but raises the affected
-module's temperature. A reserve that helps one module can still fail when all
-six lose main cooling together. The calculation must follow the residual heat
-after shutdown, including the tail beyond a chosen simulation window.
+When one module shuts down with part of its main cooling still working, its
+five cooled neighbors can absorb some of its heat. Joining the modules lowers
+the affected peak and raises the highest neighboring peak. Adding local
+reserve cooling keeps the affected module below the chosen limit during the
+simulated window.
+
+When all six shut down and lose all main cooling together, identical modules
+with identical reserves stay equally hot. No net heat moves between neighbors.
+With the same reserve per module, all six eventually exceed the chosen limit
+as residual heat continues to arrive.
 
 <a name="relevant-numbers"></a>
 
 ## Modeled temperatures and cooling reserves
 
-Every number below is a result of an **uncalibrated, dimensionless model**.
-Temperature is normalized above a fixed coolant reference; these values are
-neither degrees nor measured engine temperatures. The illustrative limit is
-**1.50**.
+Time also uses a relative scale. One model time unit equals the module’s heat
+capacity divided by its nominal cooling conductance. Values for those two
+properties are needed to translate a duration into seconds.
 
 ### One module shuts down; five remain healthy
 
-All modules start at 1. The affected module retains main cooling conductance
-`a0 = 0.20`, with residual heat `q0 = exp(-tau/3)`. The five healthy modules retain
-`q = a = 1`. The table compares the affected module’s peak temperature with the
-highest peak among the other five over normalized time 0 to 12.
+The affected module retains **20% of its nominal main cooling conductance**.
+The five healthy modules keep their normal heat input and cooling. The table
+shows the highest temperature rises the model calculates over the first
+12 model time units.
 
-| Configuration | Affected-module peak | Highest other-module peak |
+| Assumed cooling setup | Affected peak (× initial rise) | Highest other peak (× initial rise) |
 |---|---:|---:|
 | Separated, `k = 0.02` | 1.852 | 1.015 |
 | Joined, `k = 0.40` | 1.453 | 1.097 |
@@ -49,45 +62,56 @@ highest peak among the other five over normalized time 0 to 12.
 | Local reserve only | 1.205 | 1.003 |
 | Ideal switches plus local reserve | 1.205 | 1.003 |
 
-Each switched interface has one reciprocal conductance: it closes when the
-hotter endpoint reaches 1.35 and opens at 1.30, switching between `k = 0.02` and
-`0.40`. Response is instantaneous in this model. The reserve adds
-`0.5 exp(-tau/2.5)` to the affected module's cooling conductance.
+The last two rows match because reserve cooling keeps the modeled peak below
+the switch threshold of 1.35. The reserve accounts for the improvement in
+this case.
 
-**The reserve keeps the temperature below the switch threshold, so the switch
-does not activate in that case.** Its improvement comes from the modeled
-reserve cooling.
+<details>
+<summary>Single-module assumptions, switch settings and conductance thresholds</summary>
+
+The affected module has `a0 = 0.20` and residual heat `q0 = exp(-tau/3)`.
+The five healthy modules retain `q = a = 1`. The coefficient `k` measures heat
+sharing between neighbors relative to nominal main cooling conductance.
+Each switched interface closes when its hotter endpoint reaches 1.35 and opens
+at 1.30, switching between `k = 0.02` and `0.40`. The switch acts instantly
+in both directions, with the same conductance for heat flowing either way.
+The reserve adds `0.5 exp(-tau/2.5)` to the affected module’s cooling conductance.
 
 Without a reserve, the minimum retained conductance for the affected module
 to stay within the limit over this window is **34.2824%** at `k = 0.02`, versus
 **16.1847%** at `k = 0.40`. These are conductance fractions, not coolant-flow
 fractions or hardware requirements.
 
+</details>
+
 ### Shared loss of all main cooling
 
-All six modules shut down identically and receive identical reserves. Their
-temperatures stay equal, so no heat flows between them. In the equation below,
-residual heat warms each module while reserve cooling carries heat away.
+The table gives each module’s long-run temperature rise for three assumed
+reserves. The coefficient `b` sets the initial reserve cooling conductance
+relative to nominal main cooling. Estimating a coolant volume would also
+require a model of coolant storage and delivery.
+
+| Reserve case | Initial conductance coefficient `b` | Calculated long-run rise (× initial) | Compared with the chosen 1.50 limit |
+|---|---:|---:|---|
+| Original proposal | 0.500000 | 2.102392 | Exceeded |
+| Sized only to `tau = 12` | 0.822024 | 1.529371 | Exceeded later |
+| All-time model threshold | 0.844140 | 1.500000 | Approaches limit from below, zero model margin |
+
+![Simulated temperature rise versus model time after all six modules lose main cooling. The dashed curve reaches the chosen 1.50 limit at model time 12 and keeps rising.](BRIDLE-Reserve-Comparison.png)
+
+The dashed curve meets the limit at model time 12, then keeps rising toward
+1.529. Stopping the calculation at 12 would miss that later heating.
+
+<details>
+<summary>Shared-loss equation and reserve budget</summary>
+
+With identical modules and reserves, residual heat warms each module while
+reserve cooling carries heat away.
 
 $$
 \frac{d\theta}{d\tau}=e^{-\tau/3}-b e^{-\tau/2.5}\theta,
 \qquad \theta(0)=1.
 $$
-
-The table compares the long-run temperature for three starting levels of reserve cooling.
-
-| Exponential reserve | Coefficient `b` | Eventual temperature | All-time limit 1.50 |
-|---|---:|---:|---|
-| Original proposal | 0.500000 | 2.102392 | Exceeded |
-| Sized only to `tau = 12` | 0.822024 | 1.529371 | Exceeded later |
-| All-time model threshold | 0.844140 | 1.500000 | Boundary; zero model margin |
-
-**`b` is a dimensionless conductance coefficient, not an accumulator volume.**
-
-![Normalized temperature versus time after all six modules lose main cooling. The dashed curve reaches the 1.50 limit at time 12 and keeps rising.](BRIDLE-Reserve-Comparison.png)
-
-The original reserve approaches 2.102 and the reserve sized for time 12 approaches
-1.529. Only the all-time threshold approaches 1.500 from below, with zero model margin.
 
 Integrating the reserve’s cooling conductance over time gives a dimensionless
 budget equal to 2.5 times its starting coefficient, `b`.
@@ -101,6 +125,8 @@ gives **2.11035**. For this shared, zero-main-cooling problem with no other sink
 any admissible schedule must satisfy the ideal lower bound **`I >= 5/3`**.
 These are finite mathematical totals over all future time, not coolant masses
 or volumes. The reviewed note states their assumptions and derivations.
+
+</details>
 
 ## Explore and reproduce
 
